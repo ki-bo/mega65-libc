@@ -144,30 +144,4 @@ void lfill_skip(
 #define PEEK64(X) (*(volatile uint64_t*)(X))
 #endif
 
-inline void set_bits(uint16_t address, uint8_t mask)
-{
-#ifdef __CC65__
-    __asm__("LDA %v", mask);
-    __asm__("TSB address");
-#else
-    asm volatile("tsb address\n"
-                :           /* no output operands */
-                : "a"(mask) /* input operands */
-                :           /* clobber list */);
-#endif
-}
-
-inline void clear_bits(uint16_t address, uint8_t mask)
-{
-#ifdef __CC65__
-    __asm__("LDA %v", mask);
-    __asm__("TRB address");
-#else
-    asm volatile("tsb address\n"
-                :           /* no output operands */
-                : "a"(mask) /* input operands */
-                :           /* clobber list */);
-#endif
-}
-
 #endif // __MEGA65_MEMORY_H
